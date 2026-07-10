@@ -26,6 +26,6 @@ for i, q in enumerate(QUESTIONS, 1):
     with open(f"outputs/demo_{i}.md", "w") as f:
         f.write(log_md)
     print(f"Saved outputs/demo_{i}.md")
-    time.sleep(10)  # stay well inside the free tier's per-minute limits
+    time.sleep(30)  # stay well inside the free tier's per-minute limits
 
 print("\nAll demos complete.")

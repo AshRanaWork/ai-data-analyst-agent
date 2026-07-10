@@ -18,7 +18,7 @@ import requests
 
 from tools import get_schema, run_sql
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-flash-lite-latest"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
 MAX_STEPS = 10  # hard stop so the agent can never loop forever
 
@@ -60,22 +60,44 @@ TOOLS = [{
 
 
 def call_gemini(contents: list, api_key: str) -> dict:
-    """One round-trip to the Gemini API."""
+    """One round-trip to the Gemini API, with automatic retry on transient errors."""
     payload = {
         "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "contents": contents,
         "tools": TOOLS,
     }
-    resp = requests.post(
-        API_URL,
-        params={"key": api_key},
-        headers={"Content-Type": "application/json"},
-        json=payload,
-        timeout=60,
-    )
-    if resp.status_code != 200:
+    # Retry on transient errors (503 overloaded, 429 rate limit, timeouts)
+    for attempt in range(1, 6):
+        try:
+            resp = requests.post(
+                API_URL,
+                params={"key": api_key},
+                headers={"Content-Type": "application/json"},
+                json=payload,
+                timeout=180,
+            )
+        except requests.exceptions.RequestException as e:
+            if attempt == 5:
+                raise RuntimeError(f"Network error after 5 attempts: {e}")
+            wait = 2 ** attempt
+            print(f"  (network issue, retrying in {wait}s...)")
+            time.sleep(wait)
+            continue
+
+        if resp.status_code == 200:
+            return resp.json()
+
+        # Retry these transient status codes with exponential backoff
+        # Retry transient errors. 429 (rate limit) needs a longer wait.
+        if resp.status_code in (429, 500, 503) and attempt < 5:
+            wait = 30 if resp.status_code == 429 else 2 ** attempt
+            print(f"  (API returned {resp.status_code}, waiting {wait}s...)")
+            time.sleep(wait)
+            continue
+
         raise RuntimeError(f"Gemini API error {resp.status_code}: {resp.text[:500]}")
-    return resp.json()
+
+    raise RuntimeError("Failed after 5 retry attempts.")
 
 
 def execute_tool(name: str, args: dict) -> str:

@@ -2,4 +2,8 @@
 __pycache__/
 .venv/
 .DS_Store
-outputs/
+outputs/*
+!outputs/demo_1_household_count.md
+!outputs/demo_2_top_departments.md
+!outputs/demo_3_campaign_spend.md
+!outputs/demo_4_income_redemption.md
