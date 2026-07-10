@@ -4,6 +4,20 @@ An autonomous agent that answers plain-English business questions about a databa
 
 Ask it *"Do households that received marketing campaigns spend more?"* and it figures out the tables, writes the query, runs it against 2.6 million rows, and answers: *"Yes — roughly 4.4x more ($4,491.99 vs $1,028.54)."*
 
+## Live Web App
+
+A Streamlit front end lets you ask questions and watch the agent work — schema inspection, the SQL it wrote, and the answer, all in the browser.
+
+![AI Data Analyst Agent web app](screenshots/app.png)
+
+Run it locally:
+
+​```bash
+pip3 install -r requirements.txt
+export GEMINI_API_KEY="your-free-key"
+python3 -m streamlit run app.py
+​```
+
 ## Why this exists (and why not just paste data into ChatGPT?)
 
 A chatbot can discuss data you paste into it. This agent solves the problems a chatbot can't:
