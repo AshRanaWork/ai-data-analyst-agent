@@ -8,6 +8,8 @@ Ask it *"Do households that received marketing campaigns spend more?"* and it fi
 
 A Streamlit front end lets you ask questions and watch the agent work — schema inspection, the SQL it wrote, and the answer, all in the browser.
 
+https://github.com/user-attachments/assets/dbb09c42-27d1-4952-829d-b6e44d2c2b17
+
 **[▶ Try it live →](https://ashranawork-ai-agent.streamlit.app)**
 
 Run it locally:
@@ -104,7 +106,7 @@ Point it at any SQLite database by replacing `ecommerce.db` (the schema is read 
 - **SQLite-only.** Tuned for SQLite dialect; supporting Postgres/MySQL would need dialect handling.
 - **Free-tier rate limits** shape how fast batch questions can run (hence the backoff logic).
 - **No result validation.** The agent trusts its own SQL; a production version would add sanity checks on returned values.
-- **Next step:** a web front end (Streamlit) so the agent's reasoning streams live in a browser — far more accessible than the terminal.
+- **Next step:** public deployment is done (see the live app above); a natural extension is per-user API keys and authentication so it could run as a multi-user service.
 
 ## Note on Data
 
