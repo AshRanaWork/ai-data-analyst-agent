@@ -10,8 +10,6 @@ A Streamlit front end lets you ask questions and watch the agent work — schema
 
 **[▶ Try it live →](https://ashranawork-ai-agent.streamlit.app)**
 
-(screenshots/app.png)
-
 Run it locally:
 
 ​```bash
