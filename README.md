@@ -9,6 +9,7 @@ Ask it *"Do households that received marketing campaigns spend more?"* and it fi
 A Streamlit front end lets you ask questions and watch the agent work — schema inspection, the SQL it wrote, and the answer, all in the browser.
 
 **[▶ Try it live →](https://ashranawork-ai-agent.streamlit.app)**
+
 (screenshots/app.png)
 
 Run it locally:
