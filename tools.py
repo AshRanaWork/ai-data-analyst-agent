@@ -1,8 +1,10 @@
 """Tools the agent can call. Both are strictly read-only."""
 
+import os
 import sqlite3
 
-DB_PATH = "ecommerce.db"
+# Use the full database locally; fall back to the demo DB in the cloud.
+DB_PATH = "ecommerce.db" if os.path.exists("ecommerce.db") else "ecommerce_demo.db"
 MAX_ROWS = 50  # never flood the model with huge results
 
 

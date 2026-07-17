@@ -1,4 +1,5 @@
 *.db
+!ecommerce_demo.db
 __pycache__/
 .venv/
 .DS_Store
